@@ -1,20 +1,60 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 
 class App extends Component {
-  render () {
-    const a = data => {
-      axios
-        .get('http://127.0.0.1:9998/near/37.4005651/127.10944169999999')
-        .then(res => {
-          const a = res.data
-
-          console.log(this)
-        })
+  constructor (props) {
+    super(props)
+    this.state = {
+      repos: []
     }
-    a()
+  }
+  parseData = data => {
+    fetch('http://127.0.0.1:9998/near/37.4005651/127.10944169999999')
+      .then(response => response.json())
+      .then(repos => {
+        console.log(repos)
+        this.setState({
+          repos
+        })
+      })
+  }
 
-    return <div>aaaaaa</div>
+  render () {
+    return (
+      <div>
+        <button onClick={this.parseData}>asdasd</button>
+        <List repos={this.state.repos} />
+      </div>
+    )
+  }
+}
+
+class List extends React.Component {
+  constructor (props) {
+    super(props)
+  }
+
+  render () {
+    let rows = []
+    console.log(this)
+    console.log(rows)
+    this.props.repos.map((repo, index) =>
+      rows.push(<Item key={index} repo={repo} />)
+    )
+
+    return <div className='list-group'>{rows}</div>
+  }
+}
+List.defaultProps = {
+  repos: []
+}
+
+class Item extends React.Component {
+  render () {
+    return (
+      <li>
+        <div>{this.props.repo.shop_name}</div>
+      </li>
+    )
   }
 }
 
