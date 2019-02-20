@@ -1,121 +1,38 @@
 import React, { Component } from 'react'
-
+// import Login from './components/Login'
 class App extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      repos: []
-    }
-  }
-
-  parseData = data => {
-    fetch('http://127.0.0.1:9998/near/37.4005651/127.10944169999999')
-      .then(response => response.json())
-      .then(repos => {
-        this.setState({
-          repos
-        })
-      })
-  }
-
-  componentDidMount () {
-    this.parseData()
-  }
-  render () {
-    return (
-      <div>
-        <button onClick={this.parseData}>asdasd</button>
-        <List repos={this.state.repos} />
-        <Count />
-      </div>
-    )
-  }
-}
-
-class List extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-
-  render () {
-    let rows = []
-    this.props.repos.map((repo, index) =>
-      rows.push(<Item key={index} repo={repo} />)
-    )
-
-    return <div className='list-group'>{rows}</div>
-  }
-}
-List.defaultProps = {
-  repos: []
-}
-
-class Item extends React.Component {
-  render () {
-    return (
-      <li>
-        <div>{this.props.repo.shop_name}</div>
-      </li>
-    )
-  }
-}
-
-class Count extends React.Component {
   state = {
-    number: 0
+    latitude: 0,
+    longitude: 0
   }
 
-  constructor (props) {
-    super(props)
-    console.log('constructor')
+  geolocate () {
+    navigator.geolocation.getCurrentPosition(
+      this.geolocationSuccess,
+      this.onGeolocateError
+    )
+    return this.geolocationSuccess
   }
-
-  componentWillMount () {
-    console.log('componentWillMount (deprecated)')
+  geolocationSuccess (position) {
+    const latitude = position.coords.latitude
+    const longitude = position.coords.longitude
   }
-
-  componentDidMount () {
-    console.log('componentDidMount')
-  }
-
-  shouldComponentUpdate (nextProps, nextState) {
-    // 5 의 배수라면 리렌더링 하지 않음
-    console.log('shouldComponentUpdate')
-    if (nextState.number % 5 === 0) {
-      console.log(nextState.number)
-      return false
-    } else {
-      return true
+  onGeolocateError (error) {
+    if (error.code === 1) {
+      console.log(error.message)
+      // they said no
+    } else if (error.code === 2) {
+      console.log(error.message)
+    } else if (error.code === 3) {
+      console.log(error.message)
     }
   }
-
-  componentWillUpdate (nextProps, nextState) {
-    console.log('componentWillUpdate')
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    console.log('componentDidUpdate')
-  }
-
-  handleIncrease = () => {
-    this.setState(({ number }) => ({
-      number: number + 1
-    }))
-  }
-  handleDecrease = () => {
-    this.setState(({ number }) => ({
-      number: number - 1
-    }))
+  componentDidMount () {
+    this.geolocate()
+    console.log(this.geolocate())
   }
   render () {
-    return (
-      <div>
-        {this.state.number}
-        <button onClick={this.handleIncrease}>+</button>
-        <button onClick={this.handleDecrease}>-</button>
-      </div>
-    )
+    return <div />
   }
 }
-
 export default App
