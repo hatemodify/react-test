@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import Login from './components/Login'
+import Login from './components/Login'
 class App extends Component {
   state = {
     latitude: 0,
@@ -32,7 +32,7 @@ class App extends Component {
     console.log(this.geolocate())
   }
   render () {
-    return <div />
+    return <Login />
   }
 }
 export default App
