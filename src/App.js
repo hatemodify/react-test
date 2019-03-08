@@ -1,38 +1,28 @@
-import React, { Component } from 'react'
-import Login from './components/Login'
-class App extends Component {
-  state = {
-    latitude: 0,
-    longitude: 0
-  }
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
 
-  geolocate () {
-    navigator.geolocation.getCurrentPosition(
-      this.geolocationSuccess,
-      this.onGeolocateError
-    )
-    return this.geolocationSuccess
-  }
-  geolocationSuccess (position) {
-    const latitude = position.coords.latitude
-    const longitude = position.coords.longitude
-  }
-  onGeolocateError (error) {
-    if (error.code === 1) {
-      console.log(error.message)
-      // they said no
-    } else if (error.code === 2) {
-      console.log(error.message)
-    } else if (error.code === 3) {
-      console.log(error.message)
-    }
-  }
-  componentDidMount () {
-    this.geolocate()
-    console.log(this.geolocate())
-  }
-  render () {
-    return <Login />
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+      </div>
+    );
   }
 }
-export default App
+
+export default App;
