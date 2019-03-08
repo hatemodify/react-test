@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import GoogleLogin from 'react-google-login'
 
 class Login extends Component {
-  responseGoogle (response) {}
+  responseGoogle (response) {
+    console.log(response)
+  }
 
   render () {
     return (
